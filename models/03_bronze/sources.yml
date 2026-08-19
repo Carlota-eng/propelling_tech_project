@@ -1,0 +1,160 @@
+version: 2
+
+sources:
+  - name: tpch_source
+    database: SNOWFLAKE_SAMPLE_DATA
+    schema: TPCH_SF1
+    tables:
+      - name: customer
+        description: "Tabla original de clientes de TPCH-SF1."
+        columns:
+          - name: c_custkey
+            description: "Identificador único del cliente."
+          - name: c_name
+            description: "Nombre del cliente."
+          - name: c_address
+            description: "Dirección del cliente."
+          - name: c_nationkey
+            description: "Clave de la nación del cliente."
+          - name: c_phone
+            description: "Teléfono del cliente."
+          - name: c_acctbal
+            description: "Balance de cuenta del cliente."
+          - name: c_mktsegment
+            description: "Segmento de mercado del cliente."
+          - name: c_comment
+            description: "Comentarios sobre el cliente."
+
+      - name: lineitem
+        description: "Tabla original de las líneas de detalle de los pedidos de TPCH-SF1."
+        columns:
+          - name: l_orderkey
+            description: "Clave del pedido principal."
+          - name: l_partkey
+            description: "Clave de la pieza."
+          - name: l_suppkey
+            description: "Clave del proveedor."
+          - name: l_linenumber
+            description: "Número de línea secuencial."
+          - name: l_quantity
+            description: "Cantidad de unidades."
+          - name: l_extendedprice
+            description: "Precio extendido."
+          - name: l_discount
+            description: "Descuento aplicado."
+          - name: l_tax
+            description: "Impuesto aplicado."
+          - name: l_returnflag
+            description: "Flag de devolución."
+          - name: l_linestatus
+            description: "Estado de la línea."
+          - name: l_shipdate
+            description: "Fecha de envío."
+          - name: l_commitdate
+            description: "Fecha de compromiso."
+          - name: l_receiptdate
+            description: "Fecha de recepción."
+          - name: l_shipinstruct
+            description: "Instrucciones de envío."
+          - name: l_shipmode
+            description: "Modo de envío."
+          - name: l_comment
+            description: "Comentarios de la línea."
+
+      - name: nation
+        description: "Tabla original de naciones TPCH-SF1."
+        columns:
+          - name: n_nationkey
+            description: "Identificador de la nación."
+          - name: n_name
+            description: "Nombre de la nación."
+          - name: n_regionkey
+            description: "Clave de la región."
+          - name: n_comment
+            description: "Comentarios."
+
+      - name: orders
+        description: "Tabla original de cabeceras de pedidos TPCH-SF1."
+        columns:
+          - name: o_orderkey
+            description: "Identificador del pedido."
+          - name: o_custkey
+            description: "Clave del cliente."
+          - name: o_orderstatus
+            description: "Estado del pedido."
+          - name: o_totalprice
+            description: "Precio total del pedido."
+          - name: o_orderdate
+            description: "Fecha del pedido."
+          - name: o_orderpriority
+            description: "Prioridad del pedido."
+          - name: o_clerk
+            description: "Empleado que gestionó el pedido."
+          - name: o_shippriority
+            description: "Prioridad de envío."
+          - name: o_comment
+            description: "Comentarios."
+
+      - name: part
+        description: "Tabla original de productos TPCH-SF1."
+        columns:
+          - name: p_partkey
+            description: "Identificador de la pieza."
+          - name: p_name
+            description: "Nombre de la pieza."
+          - name: p_mfgr
+            description: "Fabricante."
+          - name: p_brand
+            description: "Marca."
+          - name: p_type
+            description: "Tipo de pieza."
+          - name: p_size
+            description: "Tamaño."
+          - name: p_container
+            description: "Contenedor."
+          - name: p_retailprice
+            description: "Precio de venta."
+          - name: p_comment
+            description: "Comentarios."
+
+      - name: partsupp
+        description: "Tabla original de relación producto-proveedor TPCH-SF1."
+        columns:
+          - name: ps_partkey
+            description: "Clave de la pieza."
+          - name: ps_suppkey
+            description: "Clave del proveedor."
+          - name: ps_availqty
+            description: "Cantidad disponible."
+          - name: ps_supplycost
+            description: "Coste de suministro."
+          - name: ps_comment
+            description: "Comentarios."
+
+      - name: region
+        description: "Tabla original de regiones globales TPCH-SF1."
+        columns:
+          - name: r_regionkey
+            description: "Identificador de la región."
+          - name: r_name
+            description: "Nombre de la región."
+          - name: r_comment
+            description: "Comentarios."
+
+      - name: supplier
+        description: "Tabla original de proveedores TPCH-SF1."
+        columns:
+          - name: s_suppkey
+            description: "Identificador del proveedor."
+          - name: s_name
+            description: "Nombre del proveedor."
+          - name: s_address
+            description: "Dirección."
+          - name: s_nationkey
+            description: "Clave de la nación."
+          - name: s_phone
+            description: "Teléfono."
+          - name: s_acctbal
+            description: "Balance de cuenta."
+          - name: s_comment
+            description: "Comentarios."

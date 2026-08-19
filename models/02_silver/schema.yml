@@ -1,0 +1,230 @@
+version: 2
+
+models:
+  - name: dim_customer
+    description: "Tabla dimensión de clientes."
+    columns:
+      - name: ID_CUSTOMER
+        description: "Clave primaria del cliente."
+        tests: [unique, not_null]
+      - name: FK_NATION
+        description: "Clave foránea que relaciona al cliente con su nación."
+        tests: [not_null]
+      - name: AT_CUSTOMER_NAME
+        description: "Nombre del cliente."
+      - name: AT_ADDRESS
+        description: "Dirección del cliente."
+      - name: AT_PHONE
+        description: "Número de teléfono de contacto del cliente."
+      - name: AT_MARKET_SEGMENT
+        description: "Segmento de mercado al que pertenece el cliente."
+      - name: AT_COMMENT
+        description: "Comentarios u observaciones adicionales sobre el cliente."
+      - name: MT_ACCOUNT_BALANCE
+        description: "Balance o saldo actual de la cuenta del cliente."
+      - name: IS_VIP_CUSTOMER
+        description: "Bandera booleana (TRUE/FALSE) que indica si el cliente es VIP (balance > 5000)."
+      - name: AT_CUSTOMER_TIER
+        description: "Clasificación del cliente según su riesgo financiero (HIGH_RISK_DEBT, STANDARD, PREMIUM)."
+      - name: AUDITTS_CREATION
+        description: "Marca de tiempo de la creación del registro en la capa Silver."
+      - name: AUDITTS_MODIFICATION
+        description: "Marca de tiempo de la última modificación del registro en la capa Silver."
+
+  - name: dim_supplier
+    description: "Dimensión de proveedores del negocio."
+    columns:
+      - name: ID_SUPPLIER
+        description: "Clave primaria del proveedor."
+        tests: [unique, not_null]
+      - name: FK_NATION
+        description: "Clave foránea que relaciona al proveedor con su nación."
+        tests: [not_null]
+      - name: AT_SUPPLIER_NAME
+        description: "Nombre del proveedor en mayúsculas."
+      - name: AT_ADDRESS
+        description: "Dirección del proveedor."
+      - name: AT_PHONE
+        description: "Teléfono de contacto del proveedor."
+      - name: AT_COMMENT
+        description: "Comentarios u observaciones sobre el proveedor."
+      - name: AT_SUPPLIER_TIER
+        description: "Categoría financiera del proveedor (DEBT, STANDARD, PREMIUM)."
+      - name: IS_HIGH_BALANCE_SUPPLIER
+        description: "Bandera booleana que indica si el proveedor tiene un balance elevado (> 5000)."
+      - name: MT_ACCOUNT_BALANCE
+        description: "Balance de la cuenta del proveedor."
+      - name: AUDITTS_CREATION
+        description: "Marca de tiempo de creación."
+      - name: AUDITTS_MODIFICATION
+        description: "Marca de tiempo de modificación."
+
+  - name: dim_part
+    description: "Dimensión de productos comercializados."
+    columns:
+      - name: ID_PART
+        description: "Clave primaria del producto."
+        tests: [unique, not_null]
+      - name: AT_PART_NAME
+        description: "Nombre o descripción del producto."
+      - name: AT_MANUFACTURER
+        description: "Fabricante del producto."
+      - name: AT_BRAND
+        description: "Marca del producto."
+      - name: AT_PART_TYPE
+        description: "Tipo o categoría de material del producto."
+      - name: AT_CONTAINER
+        description: "Tipo de contenedor de empaquetado del producto."
+      - name: AT_COMMENT
+        description: "Comentarios sobre el producto."
+      - name: MT_SIZE
+        description: "Tamaño del producto."
+      - name: MT_RETAIL_PRICE
+        description: "Precio del producto."
+      - name: AT_PRICE_CATEGORY
+        description: "Categoría de precio del producto (ECONOMY, STANDARD, LUXURY_OR_PREMIUM)."
+      - name: IS_BULKY_PART
+        description: "Bandera booleana que indica si es un producto grande (tamaño > 30)."
+      - name: AUDITTS_CREATION
+        description: "Marca de tiempo de creación."
+      - name: AUDITTS_MODIFICATION
+        description: "Marca de tiempo de modificación."
+
+  - name: fact_orders
+    description: "Tabla de hechos de pedidos realizados."
+    columns:
+      - name: ID_ORDER
+        description: "Clave primaria del pedido."
+        tests: [unique, not_null]
+      - name: FK_CUSTOMER
+        description: "Clave foránea que apunta al cliente que realiza el pedido."
+        tests: 
+          - not_null
+          - relationships:
+              to: ref('dim_customer')
+              field: ID_CUSTOMER
+      - name: AT_ORDER_STATUS
+        description: "Estado actual del pedido (F, O, P)."
+      - name: AT_ORDER_PRIORITY
+        description: "Nivel de urgencia del pedido."
+      - name: AT_CLERK
+        description: "Identificador de quien gestionó el pedido."
+      - name: AT_SHIP_PRIORITY
+        description: "Prioridad de envío del pedido."
+      - name: AT_COMMENT
+        description: "Comentarios sobre el pedido."
+      - name: AT_ORDER_SIZE_CATEGORY
+        description: "Categoría de valor del pedido (HIGH_VALUE_ORDER, MEDIUM_VALUE_ORDER, LOW_VALUE_ORDER)."
+      - name: DT_ORDER
+        description: "Fecha en la que se realizó el pedido."
+      - name: IS_URGENT_ORDER
+        description: "Bandera booleana que indica si el pedido es urgente basándose en su prioridad."
+      - name: MT_TOTAL_PRICE
+        description: "Precio total del pedido."
+      - name: AUDITTS_CREATION
+        description: "Marca de tiempo de creación."
+      - name: AUDITTS_MODIFICATION
+        description: "Marca de tiempo de modificación."
+
+  - name: fact_lineitem
+    description: "Tabla de hechos con el detalle de cada pedido."
+    columns:
+      - name: ID_LINE_NUMBER
+        description: "Número del pedido."
+        tests: [not_null]
+      - name: FK_ORDER
+        description: "Clave foránea que apunta al pedido principal."
+        tests: [not_null]
+      - name: FK_PART
+        description: "Clave foránea que apunta al producto pedido."
+        tests: [not_null]
+      - name: FK_SUPPLIER
+        description: "Clave foránea que apunta al proveedor asignado."
+        tests: [not_null]
+      - name: AT_RETURN_FLAG
+        description: "Indicador de devolución de la línea."
+      - name: AT_LINE_STATUS
+        description: "Estado de la línea de pedido (F, O)."
+      - name: AT_SHIP_INSTRUCT
+        description: "Instrucciones de envío para la línea."
+      - name: AT_SHIP_MODE
+        description: "Método de transporte utilizado."
+      - name: AT_COMMENT
+        description: "Comentarios sobre la línea de pedido."
+      - name: DT_SHIP
+        description: "Fecha de envío de la línea."
+      - name: DT_COMMIT
+        description: "Fecha comprometida de entrega."
+      - name: DT_RECEIPT
+        description: "Fecha real de recepción de la mercancía."
+      - name: IS_DELAYED_DELIVERY
+        description: "Bandera booleana que indica si la entrega llegó más tarde de la fecha comprometida."
+      - name: MT_QUANTITY
+        description: "Cantidad de unidades solicitadas en la línea."
+      - name: MT_EXTENDED_PRICE
+        description: "Precio extendido bruto de las unidades."
+      - name: MT_DISCOUNT
+        description: "Porcentaje de descuento aplicado."
+      - name: MT_TAX
+        description: "Porcentaje de impuestos aplicado."
+      - name: CA_NET_PRICE
+        description: "Precio neto calculado (aplicando descuento)."
+      - name: CA_TOTAL_PRICE_WITH_TAX
+        description: "Precio total final incluyendo descuentos e impuestos."
+      - name: AUDITTS_CREATION
+        description: "Marca de tiempo de creación."
+      - name: AUDITTS_MODIFICATION
+        description: "Marca de tiempo de modificación."
+
+  - name: lkp_nation
+    description: "Catálogo de naciones geográficas."
+    columns:
+      - name: ID_NATION
+        description: "Clave primaria de la nación."
+        tests: [unique, not_null]
+      - name: FK_REGION
+        description: "Clave foránea que apunta a la región a la que pertenece la nación."
+        tests: [not_null]
+      - name: AT_NATION_NAME
+        description: "Nombre del país."
+      - name: AT_COMMENT
+        description: "Comentarios sobre el país."
+      - name: AUDITTS_CREATION
+        description: "Marca de tiempo de creación."
+      - name: AUDITTS_MODIFICATION
+        description: "Marca de tiempo de modificación."
+
+  - name: lkp_region
+    description: "Catálogo de regiones geográficas globales."
+    columns:
+      - name: ID_REGION
+        description: "Clave primaria de la región."
+        tests: [unique, not_null]
+      - name: AT_REGION_NAME
+        description: "Nombre de la región global."
+      - name: AT_COMMENT
+        description: "Comentarios sobre la región."
+      - name: AUDITTS_CREATION
+        description: "Marca de tiempo de creación."
+      - name: AUDITTS_MODIFICATION
+        description: "Marca de tiempo de modificación."
+
+  - name: lkp_partsupp
+    description: "Tabla de relación entre productos y proveedores con stock y costes."
+    columns:
+      - name: FK_PART
+        description: "Clave foránea que apunta al producto."
+        tests: [not_null]
+      - name: FK_SUPPLIER
+        description: "Clave foránea que apunta al proveedor."
+        tests: [not_null]
+      - name: AT_COMMENT
+        description: "Comentarios sobre la relación producto-proveedor."
+      - name: MT_AVAILABLE_QTY
+        description: "Cantidad disponible en stock del proveedor para este producto."
+      - name: MT_SUPPLY_COST
+        description: "Coste de suministro para el proveedor."
+      - name: AUDITTS_CREATION
+        description: "Marca de tiempo de creación."
+      - name: AUDITTS_MODIFICATION
+        description: "Marca de tiempo de modificación."

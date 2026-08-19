@@ -1,0 +1,66 @@
+version: 2
+
+models:
+  - name: cust_sales_performance
+    description: "Vista customizada para analizar el rendimiento de ventas y márgenes netos agrupados por mes, región y segmento de mercado."
+    columns:
+      - name: DT_MONTH
+        description: "Mes en el que se realizaron las transacciones de los pedidos."
+      - name: AT_REGION_NAME
+        description: "Nombre de la región geográfica global donde se originó la venta."
+      - name: AT_MARKET_SEGMENT
+        description: "Segmento de mercado al que pertenece el cliente comprador."
+      - name: MT_TOTAL_ORDERS
+        description: "Número total de pedidos únicos agrupados por mes, región y segmento."
+      - name: MT_TOTAL_NET_SALES
+        description: "Suma total de los ingresos netos obtenidos (después de descuentos e impuestos)."
+      - name: MT_AVG_ORDER_VALUE
+        description: "Valor monetario medio de los pedidos netos en el grupo."
+
+  - name: cust_customer_360
+    description: "Vista customizada de 360 grados del cliente, uniendo datos maestros con su histórico de compras y valor de vida."
+    columns:
+      - name: ID_CUSTOMER
+        description: "Identificador único del cliente."
+        tests: [unique, not_null]
+      - name: AT_CUSTOMER_NAME
+        description: "Nombre completo del cliente."
+      - name: AT_MARKET_SEGMENT
+        description: "Segmento de mercado del cliente."
+      - name: AT_CUSTOMER_TIER
+        description: "Clasificación de riesgo financiero del cliente."
+      - name: IS_VIP_CUSTOMER
+        description: "Bandera booleana que indica si el cliente es VIP por superar el saldo umbral."
+      - name: AT_NATION_NAME
+        description: "Nombre de la nación del cliente."
+      - name: AT_REGION_NAME
+        description: "Nombre de la región del cliente."
+      - name: MT_TOTAL_ORDERS
+        description: "Número total histórico de pedidos realizados por el cliente."
+      - name: MT_LIFETIME_VALUE
+        description: "Valor monetario total histórico acumulado de las compras del cliente (LTV)."
+      - name: DT_LAST_ORDER
+        description: "Fecha del pedido más reciente realizado por el cliente."
+      - name: MT_ACCOUNT_BALANCE
+        description: "Saldo actual de la cuenta del cliente."
+
+  - name: cust_supplier_logistics
+    description: "Vista customizada para auditar el rendimiento operativo y los retrasos logísticos de los proveedores."
+    columns:
+      - name: ID_SUPPLIER
+        description: "Identificador único del proveedor."
+        tests: [unique, not_null]
+      - name: AT_SUPPLIER_NAME
+        description: "Nombre del proveedor."
+      - name: AT_SUPPLIER_TIER
+        description: "Categoría financiera del proveedor."
+      - name: AT_NATION_NAME
+        description: "Nombre de la nación del proveedor."
+      - name: AT_REGION_NAME
+        description: "Nombre de la región del proveedor."
+      - name: MT_TOTAL_ITEMS_SUPPLIED
+        description: "Número total de líneas de pedido suministradas por el proveedor."
+      - name: MT_DELAYED_ITEMS_COUNT
+        description: "Número de líneas de pedido suministradas que sufrieron retraso en la entrega."
+      - name: MT_AVG_SUPPLY_AMOUNT
+        description: "Importe neto medio asociado a las líneas servidas por el proveedor."

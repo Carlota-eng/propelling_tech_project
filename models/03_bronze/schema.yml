@@ -1,0 +1,19 @@
+version: 2
+
+models:
+  - name: raw_customer
+    description: "Datos crudos de clientes extraídos de la fuente TPCH-SF1."
+  - name: raw_part
+    description: "Datos crudos de piezas o productos extraídos de la fuente TPCH-SF1."
+  - name: raw_supplier
+    description: "Datos crudos de proveedores extraídos de la fuente TPCH-SF1."
+  - name: raw_orders
+    description: "Datos crudos de cabeceras de pedidos extraídos de la fuente TPCH-SF1."
+  - name: raw_lineitem
+    description: "Datos crudos de líneas de detalle de los pedidos extraídos de la fuente TPCH-SF1."
+  - name: raw_nation
+    description: "Datos crudos de catálogo de naciones extraídos de la fuente TPCH-SF1."
+  - name: raw_region
+    description: "Datos crudos de catálogo de regiones extraídos de la fuente TPCH-SF1."
+  - name: raw_partsupp
+    description: "Datos crudos de la relación pieza-proveedor extraídos de la fuente TPCH-SF1."
