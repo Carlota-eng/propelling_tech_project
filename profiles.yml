@@ -1,0 +1,12 @@
+propelling_tech_project:
+  target: dev
+  outputs:
+    dev:
+      type: snowflake
+      account: "pbjilov-dw46306"
+      user: "carlotavila"
+      role: "dbt_role"
+      warehouse: "dbt_wh"
+      database: "PROPELLING_TECH_DB"
+      schema: "PUBLIC"
+      threads: 4

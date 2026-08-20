@@ -101,8 +101,9 @@ models:
         tests: 
           - not_null
           - relationships:
-              to: ref('dim_customer')
-              field: ID_CUSTOMER
+              arguments:
+                to: ref('dim_customer')
+                field: ID_CUSTOMER
       - name: AT_ORDER_STATUS
         description: "Estado actual del pedido (F, O, P)."
       - name: AT_ORDER_PRIORITY
