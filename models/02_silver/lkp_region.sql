@@ -1,14 +1,40 @@
 {{
     config(
-        materialized='table',
-        alias='LKP_REGION'
+        materialized='incremental',
+        unique_key='ID_REGION',
+        strategy='merge',
+        alias='LKP_REGION',
+        update_columns=[
+            'AT_REGION_NAME',
+            'AT_COMMENT',
+            'AUDITTS_MODIFICATION'
+        ]
     )
 }}
 
-SELECT
-    r_regionkey                 AS ID_REGION,
-    UPPER(TRIM(r_name))         AS AT_REGION_NAME,
-    UPPER(TRIM(r_comment))      AS AT_COMMENT,
-    CURRENT_TIMESTAMP()         AS AUDITTS_CREATION,
-    CURRENT_TIMESTAMP()         AS AUDITTS_MODIFICATION
-FROM {{ ref('raw_region') }}
+WITH clean_region AS (
+    SELECT
+        r_regionkey                   AS ID_REGION,
+        UPPER(TRIM(r_name))           AS AT_REGION_NAME,
+        UPPER(TRIM(r_comment))        AS AT_COMMENT,
+        RAW_LOADED_AT                 AS DT_RAW_LOADED_AT
+    FROM {{ ref('raw_region') }}
+),
+
+transformed_region AS (
+    SELECT
+        ID_REGION,
+        AT_REGION_NAME,
+        AT_COMMENT,
+        
+        -- audits
+        DT_RAW_LOADED_AT    AS AUDITTS_CREATION,
+        CURRENT_TIMESTAMP() AS AUDITTS_MODIFICATION
+    FROM clean_region
+)
+
+SELECT * FROM transformed_region
+
+{% if is_incremental() %}
+    WHERE ID_REGION > (SELECT COALESCE(MAX(ID_REGION), 0) FROM {{ this }})
+{% endif %}

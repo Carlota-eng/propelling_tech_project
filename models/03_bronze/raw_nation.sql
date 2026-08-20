@@ -1,6 +1,8 @@
 {{
     config(
-        materialized='table'
+        materialized='incremental',
+        unique_key='n_nationkey',
+        strategy='merge'
     )
 }}
 
@@ -9,5 +11,9 @@ SELECT
     n_name,
     n_regionkey,
     n_comment,
-    CURRENT_TIMESTAMP() as dbt_loaded_at
-FROM {{ source('tpch_source', 'nation') }}
+    CURRENT_TIMESTAMP() AS RAW_LOADED_AT
+FROM {{ source('tpch', 'nation') }}
+
+{% if is_incremental() %}
+    WHERE n_nationkey > (SELECT COALESCE(MAX(n_nationkey), 0) FROM {{ this }})
+{% endif %}

@@ -1,7 +1,8 @@
 {{
     config(
         materialized='incremental',
-        unique_key=['l_orderkey', 'l_linenumber']
+        unique_key=['l_orderkey', 'l_linenumber'],
+        strategy='merge'
     )
 }}
 
@@ -22,9 +23,9 @@ SELECT
     l_shipinstruct,
     l_shipmode,
     l_comment,
-    CURRENT_TIMESTAMP() as dbt_loaded_at
+    CURRENT_TIMESTAMP() AS RAW_LODADED_AT
 FROM {{ source('tpch_source', 'lineitem') }}
 
-{% if is_incremental() %}
-    WHERE l_orderkey > (SELECT COALESCE(MAX(l_orderkey), 0) FROM {{ this }})
+{% if is_incremental() %
+    WHERE l_orderkey >= (SELECT COALESCE(MAX(l_orderkey), 0) FROM {{ this }})
 {% endif %}

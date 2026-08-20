@@ -1,7 +1,8 @@
 {{
     config(
         materialized='incremental',
-        unique_key='p_partkey'
+        unique_key='p_partkey',
+        strategy='merge'
     )
 }}
 
@@ -15,7 +16,7 @@ SELECT
     p_container,
     p_retailprice,
     p_comment,
-    CURRENT_TIMESTAMP() as dbt_loaded_at
+    CURRENT_TIMESTAMP() AS RAW_LOADED_AT
 FROM {{ source('tpch_source', 'part') }}
 
 {% if is_incremental() %}
