@@ -23,9 +23,9 @@ SELECT
     l_shipinstruct,
     l_shipmode,
     l_comment,
-    CURRENT_TIMESTAMP() AS RAW_LODADED_AT
+    CURRENT_TIMESTAMP() AS RAW_LOADED_AT
 FROM {{ source('tpch_source', 'lineitem') }}
 
-{% if is_incremental() %
+{% if is_incremental() %}
     WHERE l_orderkey >= (SELECT COALESCE(MAX(l_orderkey), 0) FROM {{ this }})
 {% endif %}

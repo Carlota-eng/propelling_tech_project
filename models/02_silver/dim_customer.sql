@@ -14,7 +14,6 @@
             'MT_ACCOUNT_BALANCE', 
             'IS_VIP_CUSTOMER', 
             'AT_CUSTOMER_TIER', 
-            'CD_MD5', 
             'AUDITTS_MODIFICATION'
         ]
     )
@@ -58,17 +57,6 @@ transformed_customer AS (
             ELSE 'PREMIUM'
         END AS AT_CUSTOMER_TIER,
 
-        --generar código md5 hasheado
-        md5(
-            coalesce(cast(FK_NATION as string), '') || '|' ||
-            coalesce(cast(AT_CUSTOMER_NAME as string), '') || '|' ||
-            coalesce(cast(AT_ADDRESS as string), '') || '|' ||
-            coalesce(cast(AT_PHONE as string), '') || '|' ||
-            coalesce(cast(AT_MARKET_SEGMENT as string), '') || '|' ||
-            coalesce(cast(AT_COMMENT as string), '') || '|' ||
-            coalesce(cast(MT_ACCOUNT_BALANCE as string), '')
-        ) AS CD_MD5,
-
         -- Auditoría interna
         DT_RAW_LOADED_AT AS AUDITTS_CREATION,
         CURRENT_TIMESTAMP() AS AUDITTS_MODIFICATION
@@ -77,8 +65,7 @@ transformed_customer AS (
 
 SELECT * FROM transformed_customer
 
--- filtro para nuevos registros y/o modificaciones de registros existentes
+-- filtro incremental estándar por ID máximo
 {% if is_incremental() %}
     WHERE ID_CUSTOMER > (SELECT COALESCE(MAX(ID_CUSTOMER), 0) FROM {{ this }})
-       OR CD_MD5 NOT IN (SELECT COALESCE(CD_MD5, '') FROM {{ this }})
 {% endif %}

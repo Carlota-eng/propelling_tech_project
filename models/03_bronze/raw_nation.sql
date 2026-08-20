@@ -12,7 +12,7 @@ SELECT
     n_regionkey,
     n_comment,
     CURRENT_TIMESTAMP() AS RAW_LOADED_AT
-FROM {{ source('tpch', 'nation') }}
+FROM {{ source('tpch_source', 'nation') }}
 
 {% if is_incremental() %}
     WHERE n_nationkey > (SELECT COALESCE(MAX(n_nationkey), 0) FROM {{ this }})
