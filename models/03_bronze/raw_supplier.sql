@@ -1,7 +1,8 @@
 {{
     config(
         materialized='incremental',
-        unique_key='s_suppkey'
+        unique_key='s_suppkey',
+        strategy='merge'
     )
 }}
 
@@ -13,7 +14,7 @@ SELECT
     s_phone,
     s_acctbal,
     s_comment,
-    CURRENT_TIMESTAMP() as dbt_loaded_at
+    CURRENT_TIMESTAMP() AS RAW_LOADED_AT
 FROM {{ source('tpch_source', 'supplier') }}
 
 {% if is_incremental() %}

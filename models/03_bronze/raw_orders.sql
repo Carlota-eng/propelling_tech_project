@@ -1,7 +1,8 @@
 {{
     config(
         materialized='incremental',
-        unique_key='o_orderkey'
+        unique_key='o_orderkey',
+        strategy='merge'
     )
 }}
 
@@ -15,8 +16,8 @@ SELECT
     o_clerk,
     o_shippriority,
     o_comment,
-    CURRENT_TIMESTAMP() as dbt_loaded_at
-FROM {{ source('tpch_source', 'orders') }}
+    CURRENT_TIMESTAMP() AS RAW_LOADED_AT
+FROM {{ source('tpch', 'orders') }}
 
 {% if is_incremental() %}
     WHERE o_orderkey > (SELECT COALESCE(MAX(o_orderkey), 0) FROM {{ this }})
