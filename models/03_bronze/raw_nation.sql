@@ -2,7 +2,7 @@
     config(
         materialized='incremental',
         unique_key='n_nationkey',
-        strategy='merge'
+        incremental_strategy='merge'
     )
 }}
 

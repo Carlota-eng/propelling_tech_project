@@ -2,7 +2,7 @@
     config(
         materialized='incremental',
         unique_key=['ps_partkey', 'ps_suppkey'],
-        strategy='merge'
+        incremental_strategy='merge'
     )
 }}
 

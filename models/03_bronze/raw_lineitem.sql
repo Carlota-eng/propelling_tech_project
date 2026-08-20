@@ -2,7 +2,7 @@
     config(
         materialized='incremental',
         unique_key=['l_orderkey', 'l_linenumber'],
-        strategy='merge'
+        incremental_strategy='merge'
     )
 }}
 
