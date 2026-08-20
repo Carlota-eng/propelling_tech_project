@@ -1,4 +1,30 @@
-{{ config(materialized='table') }}
+{{
+    config(
+        materialized='incremental',
+        unique_key=['l_orderkey', 'l_linenumber']
+    )
+}}
 
-SELECT *
+SELECT 
+    l_orderkey,
+    l_partkey,
+    l_suppkey,
+    l_linenumber,
+    l_quantity,
+    l_extendedprice,
+    l_discount,
+    l_tax,
+    l_returnflag,
+    l_linestatus,
+    l_shipdate,
+    l_commitdate,
+    l_receiptdate,
+    l_shipinstruct,
+    l_shipmode,
+    l_comment,
+    CURRENT_TIMESTAMP() as dbt_loaded_at
 FROM {{ source('tpch_source', 'lineitem') }}
+
+{% if is_incremental() %}
+    WHERE l_orderkey > (SELECT COALESCE(MAX(l_orderkey), 0) FROM {{ this }})
+{% endif %}
