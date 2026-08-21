@@ -3,27 +3,7 @@
         materialized='incremental',
         unique_key=['FK_ORDER', 'ID_LINE_NUMBER'],
         incremental_strategy='merge',
-        alias='FACT_LINEITEM',
-        update_columns=[
-            'FK_PART',
-            'FK_SUPPLIER',
-            'AT_RETURN_FLAG',
-            'AT_LINE_STATUS',
-            'AT_SHIP_INSTRUCT',
-            'AT_SHIP_MODE',
-            'AT_COMMENT',
-            'DT_SHIP',
-            'DT_COMMIT',
-            'DT_RECEIPT',
-            'IS_DELAYED_DELIVERY',
-            'MT_QUANTITY',
-            'MT_EXTENDED_PRICE',
-            'MT_DISCOUNT',
-            'MT_TAX',
-            'CA_NET_PRICE',
-            'CA_TOTAL_PRICE_WITH_TAX',
-            'AUDITTS_MODIFICATION'
-        ]
+        alias='FACT_LINEITEM'
     )
 }}
 

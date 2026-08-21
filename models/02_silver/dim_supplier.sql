@@ -3,18 +3,7 @@
         materialized='incremental',
         unique_key='ID_SUPPLIER',
         incremental_strategy='merge',
-        alias='DIM_SUPPLIER',
-        update_columns=[
-            'FK_NATION',
-            'AT_SUPPLIER_NAME',
-            'AT_ADDRESS',
-            'AT_PHONE',
-            'AT_COMMENT',
-            'AT_SUPPLIER_TIER',
-            'IS_HIGH_BALANCE_SUPPLIER',
-            'MT_ACCOUNT_BALANCE',
-            'AUDITTS_MODIFICATION'
-        ]
+        alias='DIM_SUPPLIER'
     )
 }}
 

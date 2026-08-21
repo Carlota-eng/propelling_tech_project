@@ -3,20 +3,7 @@
         materialized='incremental',
         unique_key='ID_ORDER',
         incremental_strategy='merge',
-        alias='FACT_ORDERS',
-        update_columns=[
-            'FK_CUSTOMER',
-            'AT_ORDER_STATUS',
-            'AT_ORDER_PRIORITY',
-            'AT_CLERK',
-            'AT_SHIP_PRIORITY',
-            'AT_COMMENT',
-            'AT_ORDER_SIZE_CATEGORY',
-            'DT_ORDER',
-            'IS_URGENT_ORDER',
-            'MT_TOTAL_PRICE',
-            'AUDITTS_MODIFICATION'
-        ]
+        alias='FACT_ORDERS'
     )
 }}
 
