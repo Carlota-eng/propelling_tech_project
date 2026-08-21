@@ -3,19 +3,7 @@
         materialized='incremental',
         unique_key='ID_CUSTOMER',
         incremental_strategy='merge',
-        alias='DIM_CUSTOMER',
-        update_columns=[
-            'FK_NATION', 
-            'AT_CUSTOMER_NAME', 
-            'AT_ADDRESS', 
-            'AT_PHONE', 
-            'AT_MARKET_SEGMENT', 
-            'AT_COMMENT', 
-            'MT_ACCOUNT_BALANCE', 
-            'IS_VIP_CUSTOMER', 
-            'AT_CUSTOMER_TIER', 
-            'AUDITTS_MODIFICATION'
-        ]
+        alias='DIM_CUSTOMER'
     )
 }}
 

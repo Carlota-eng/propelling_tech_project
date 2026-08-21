@@ -3,20 +3,7 @@
         materialized='incremental',
         unique_key='ID_PART',
         incremental_strategy='merge',
-        alias='DIM_PART',
-        update_columns=[
-            'AT_PART_NAME',
-            'AT_MANUFACTURER',
-            'AT_BRAND',
-            'AT_PART_TYPE',
-            'AT_CONTAINER',
-            'AT_COMMENT',
-            'MT_SIZE',
-            'MT_RETAIL_PRICE',
-            'AT_PRICE_CATEGORY',
-            'IS_BULKY_PART',
-            'AUDITTS_MODIFICATION'
-        ]
+        alias='DIM_PART'
     )
 }}
 

@@ -3,13 +3,7 @@
         materialized='incremental',
         unique_key='ID_NATION',
         incremental_strategy='merge',
-        alias='LKP_NATION',
-        update_columns=[
-            'FK_REGION',
-            'AT_NATION_NAME',
-            'AT_COMMENT',
-            'AUDITTS_MODIFICATION'
-        ]
+        alias='LKP_NATION'
     )
 }}
 

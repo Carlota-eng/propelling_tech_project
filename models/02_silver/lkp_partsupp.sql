@@ -3,13 +3,7 @@
         materialized='incremental',
         unique_key=['FK_PART', 'FK_SUPPLIER'],
         incremental_strategy='merge',
-        alias='LKP_PARTSUPP',
-        update_columns=[
-            'MT_AVAILABLE_QTY',
-            'MT_SUPPLY_COST',
-            'AT_COMMENT',
-            'AUDITTS_MODIFICATION'
-        ]
+        alias='LKP_PARTSUPP'
     )
 }}
 
