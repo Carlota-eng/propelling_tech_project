@@ -10,7 +10,11 @@ WITH customer_orders AS (
         FK_CUSTOMER,
         COUNT(ID_ORDER)         AS MT_TOTAL_ORDERS,
         SUM(MT_TOTAL_PRICE)     AS MT_LIFETIME_VALUE,
-        MAX(DT_ORDER)           AS DT_LAST_ORDER
+        MAX(DT_ORDER)           AS DT_LAST_ORDER,
+        SUM(CASE 
+                WHEN IS_URGENT_ORDER THEN 1
+                ELSE 0
+                END)            AS MT_URGENT_ORDERS_COUNT
     FROM {{ ref('fact_orders') }}
     GROUP BY 1
 )
@@ -26,6 +30,7 @@ SELECT
     COALESCE(O.MT_TOTAL_ORDERS, 0)      AS MT_TOTAL_ORDERS,
     COALESCE(O.MT_LIFETIME_VALUE, 0)    AS MT_LIFETIME_VALUE,
     O.DT_LAST_ORDER,
+    O.MT_URGENT_ORDERS_COUNT,
     C.MT_ACCOUNT_BALANCE
 FROM {{ ref('dim_customer') }} AS C
 LEFT JOIN customer_orders AS O ON C.ID_CUSTOMER = O.FK_CUSTOMER

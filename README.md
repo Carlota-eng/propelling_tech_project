@@ -95,6 +95,8 @@ FROM {{ source('tpch_source', 'lineitem') }}
   └─ README.md
 ```
 
+---
+
 ### 4. Ejecución del proyecto
 Una vez configurado el entorno y el perfil, se puede compilar y ejecutar los modelos de forma secuencial:
 
@@ -106,6 +108,9 @@ Una vez configurado el entorno y el perfil, se puede compilar y ejecutar los mod
   ```bash
   dbt run
   ```
+
+---
+
 ### 5. Documentación y Linaje de Datos (DAG)
 El proyecto incluye documentación interactiva generada automáticamente por dbt. Para explorarla localmente junto con el linaje de dependencias (DAG), ejecutar:
 
@@ -115,3 +120,13 @@ dbt docs serve
 ```
 
 Esto abrirá de forma local una interfaz web en tu navegador (disponible por defecto en http://localhost:8080/#!/overview) donde podrás consultar las descripciones de las tablas, columnas, pruebas y el flujo completo de transformación de toda la arquitectura Medallion.
+
+**Visualización del Linaje de Datos:**
+![Diagrama de Linaje (DAG)](./assets/dag_lineage.png)
+
+## 6. Orquestración y Despliegue en dbt Cloud
+Para automatizar la ejecución de los modelos de forma periódica, se ha configurado un entorno de despliegue en **dbt Cloud** conectado al repositorio.
+
+* **Job Configurado:** `propelling_tech_scheduler`
+* **Frecuencia:** Programado para ejecutarse automáticamente **todos los días cada 12 horas**.
+* **Propósito:** Garantizar que las capas Bronze, Silver y Gold se mantengan actualizadas de manera continua con los últimos cambios procedentes del origen sin intervención manual.
