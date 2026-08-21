@@ -2,7 +2,7 @@
     config(
         materialized='incremental',
         unique_key='o_orderkey',
-        strategy='merge'
+        incremental_strategy='merge'
     )
 }}
 
@@ -17,7 +17,7 @@ SELECT
     o_shippriority,
     o_comment,
     CURRENT_TIMESTAMP() AS RAW_LOADED_AT
-FROM {{ source('tpch', 'orders') }}
+FROM {{ source('tpch_source', 'orders') }}
 
 {% if is_incremental() %}
     WHERE o_orderkey > (SELECT COALESCE(MAX(o_orderkey), 0) FROM {{ this }})

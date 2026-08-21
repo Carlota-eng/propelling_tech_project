@@ -2,7 +2,7 @@
     config(
         materialized='incremental',
         unique_key=['FK_ORDER', 'ID_LINE_NUMBER'],
-        strategy='merge',
+        incremental_strategy='merge',
         alias='FACT_LINEITEM',
         update_columns=[
             'FK_PART',

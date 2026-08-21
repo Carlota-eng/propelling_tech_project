@@ -2,7 +2,7 @@
     config(
         materialized='incremental',
         unique_key='ID_ORDER',
-        strategy='merge',
+        incremental_strategy='merge',
         alias='FACT_ORDERS',
         update_columns=[
             'FK_CUSTOMER',

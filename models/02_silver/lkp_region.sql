@@ -2,7 +2,7 @@
     config(
         materialized='incremental',
         unique_key='ID_REGION',
-        strategy='merge',
+        incremental_strategy='merge',
         alias='LKP_REGION',
         update_columns=[
             'AT_REGION_NAME',

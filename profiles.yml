@@ -5,6 +5,7 @@ propelling_tech_project:
       type: snowflake
       account: "pbjilov-dw46306"
       user: "carlotavila"
+      password: "Gallopintonic19!"
       role: "dbt_role"
       warehouse: "dbt_wh"
       database: "PROPELLING_TECH_DB"

@@ -12,6 +12,9 @@ create warehouse dbt_wh with warehouse_size='x-small';
 
 -- creacion de la base de datos
 create database if not exists propelling_tech_db;
+--CREATE SCHEMA IF NOT EXISTS PROPELLING_TECH_DB.BRONZE;
+--CREATE SCHEMA IF NOT EXISTS PROPELLING_TECH_DB.SILVER;
+--CREATE SCHEMA IF NOT EXISTS PROPELLING_TECH_DB.GOLD;
 
 -- asignar permisos
 grant usage on warehouse dbt_wh to role dbt_role;

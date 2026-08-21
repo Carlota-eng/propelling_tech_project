@@ -2,7 +2,7 @@
     config(
         materialized='incremental',
         unique_key='ID_PART',
-        strategy='merge',
+        incremental_strategy='merge',
         alias='DIM_PART',
         update_columns=[
             'AT_PART_NAME',

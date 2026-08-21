@@ -2,7 +2,7 @@
     config(
         materialized='incremental',
         unique_key=['FK_PART', 'FK_SUPPLIER'],
-        strategy='merge',
+        incremental_strategy='merge',
         alias='LKP_PARTSUPP',
         update_columns=[
             'MT_AVAILABLE_QTY',

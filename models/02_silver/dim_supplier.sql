@@ -2,7 +2,7 @@
     config(
         materialized='incremental',
         unique_key='ID_SUPPLIER',
-        strategy='merge',
+        incremental_strategy='merge',
         alias='DIM_SUPPLIER',
         update_columns=[
             'FK_NATION',
