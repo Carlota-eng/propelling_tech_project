@@ -35,3 +35,19 @@ SELECT
     0 AS o_shippriority,
     'Test negative price' AS o_comment,
     CURRENT_TIMESTAMP() AS RAW_LOADED_AT
+
+
+UNION ALL
+
+-- Inyectamos el pedido 8888888 para que cruce con la línea de fecha incorrecta
+SELECT 
+    8888888 AS o_orderkey,
+    1 AS o_custkey,
+    'O' AS o_orderstatus,
+    500.00 AS o_totalprice,
+    '2026-06-01' AS o_orderdate,
+    '1-URGENT' AS o_orderpriority,
+    'CLERK#000000001' AS o_clerk,
+    0 AS o_shippriority,
+    'Test matching lineitem bad date' AS o_comment,
+    CURRENT_TIMESTAMP() AS RAW_LOADED_AT
