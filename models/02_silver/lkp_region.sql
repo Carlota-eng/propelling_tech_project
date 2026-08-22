@@ -30,6 +30,5 @@ transformed_region AS (
 
 SELECT * FROM transformed_region
 
-{% if is_incremental() %}
-    WHERE ID_REGION > (SELECT COALESCE(MAX(ID_REGION), 0) FROM {{ this }})
-{% endif %}
+-- filtro incremental estándar por ID máximo
+{{ incremental_filter('ID_REGION') }}

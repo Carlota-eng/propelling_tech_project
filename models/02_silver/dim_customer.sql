@@ -54,6 +54,4 @@ transformed_customer AS (
 SELECT * FROM transformed_customer
 
 -- filtro incremental estándar por ID máximo
-{% if is_incremental() %}
-    WHERE ID_CUSTOMER > (SELECT COALESCE(MAX(ID_CUSTOMER), 0) FROM {{ this }})
-{% endif %}
+{{ incremental_filter('ID_CUSTOMER') }}

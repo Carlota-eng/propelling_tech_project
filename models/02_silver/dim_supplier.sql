@@ -52,6 +52,5 @@ transformed_supplier AS (
 
 SELECT * FROM transformed_supplier
 
-{% if is_incremental() %}
-    WHERE ID_SUPPLIER > (SELECT COALESCE(MAX(ID_SUPPLIER), 0) FROM {{ this }})
-{% endif %}
+-- filtro incremental estándar por ID máximo
+{{ incremental_filter('ID_SUPPLIER') }}

@@ -34,6 +34,5 @@ transformed_partsupp AS (
 
 SELECT * FROM transformed_partsupp
 
-{% if is_incremental() %}
-    WHERE FK_PART >= (SELECT COALESCE(MAX(FK_PART), 0) FROM {{ this }})
-{% endif %}
+-- filtro incremental estándar por ID máximo
+{{ incremental_filter('FK_PART') }}

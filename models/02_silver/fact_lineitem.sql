@@ -70,6 +70,5 @@ transformed_lineitem AS (
 
 SELECT * FROM transformed_lineitem
 
-{% if is_incremental() %}
-    WHERE FK_ORDER >= (SELECT COALESCE(MAX(FK_ORDER), 0) FROM {{ this }})
-{% endif %}
+-- filtro incremental estándar por ID máximo
+{{ incremental_filter('FK_ORDER') }}
