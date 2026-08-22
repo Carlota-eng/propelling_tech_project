@@ -1,7 +1,10 @@
 -- asegurar que la fecha de recepción del pedido nunca sea
 -- anterior a la fecha de emisión del mismo.
 
-{{ config(severity = 'warn') }}
+{{ config(
+    severity = 'warn',
+    store_failures = true
+) }}
 
 SELECT 
     li.fk_order AS id_order,

@@ -1,7 +1,10 @@
 -- asegurar que ninguna métrica de precio (mt_total_price, ca_net_rpice)
 -- sea negativa o cero.
 
-{{ config(severity = 'warn') }}
+{{ config(
+    severity = 'warn',
+    store_failures = true
+) }}
 
 SELECT
     ID_ORDER,
