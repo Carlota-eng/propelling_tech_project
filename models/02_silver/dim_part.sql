@@ -55,6 +55,5 @@ transformed_part AS (
 
 SELECT * FROM transformed_part
 
-{% if is_incremental() %}
-    WHERE ID_PART > (SELECT COALESCE(MAX(ID_PART), 0) FROM {{ this }})
-{% endif %}
+-- filtro incremental estándar por ID máximo
+{{ incremental_filter('ID_PART') }}

@@ -19,6 +19,4 @@ SELECT
     CURRENT_TIMESTAMP() AS RAW_LOADED_AT
 FROM {{ source('tpch_source', 'part') }}
 
-{% if is_incremental() %}
-    WHERE p_partkey > (SELECT COALESCE(MAX(p_partkey), 0) FROM {{ this }})
-{% endif %}
+{{ incremental_filter('p_partkey') }}

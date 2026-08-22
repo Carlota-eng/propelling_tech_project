@@ -32,6 +32,5 @@ transformed_nation AS (
 
 SELECT * FROM transformed_nation
 
-{% if is_incremental() %}
-    WHERE ID_NATION > (SELECT COALESCE(MAX(ID_NATION), 0) FROM {{ this }})
-{% endif %}
+-- filtro incremental estándar por ID máximo
+{{ incremental_filter('ID_NATION') }}

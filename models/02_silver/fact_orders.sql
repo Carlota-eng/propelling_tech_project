@@ -61,6 +61,5 @@ transformed_orders AS (
 
 SELECT * FROM transformed_orders
 
-{% if is_incremental() %}
-    WHERE ID_ORDER > (SELECT COALESCE(MAX(ID_ORDER), 0) FROM {{ this }})
-{% endif %}
+-- filtro incremental estándar por ID máximo
+{{ incremental_filter('ID_ORDER') }}

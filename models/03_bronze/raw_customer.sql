@@ -18,6 +18,4 @@ SELECT
     CURRENT_TIMESTAMP() AS RAW_LOADED_AT
 FROM {{ source('tpch_source', 'customer') }}
 
-{% if is_incremental() %}
-    WHERE c_custkey > (SELECT COALESCE(MAX(c_custkey), 0) FROM {{ this }})
-{% endif %}
+{{ incremental_filter('c_custkey') }}
